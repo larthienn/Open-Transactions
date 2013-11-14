@@ -1016,7 +1016,6 @@ vector<string> cHintManager::BuildTreeOfCommandlines(const string &sofar_str, bo
 	// === at 1st (non-front-option) word (topic) ===
 
 	if (full_words<1) { // at 1st word (topic) -> show all level 1 cmdnames
-
 		return WordsThatMatch(  current_word  ,  vector<string>{"account", "account-in", "account-out", "asset", "basket", "cash", "cheque", "contract", "market", "mint", "msg", "msguard", "nym", "nym-cred", /*"receipt"??,*/ "server", "text", "voucher"/*, "wallet"??*/} + cmdFrontOpt  ) ;
 		//commented procedures are those which we ain't sure if they will appear - definitions below
 	}
