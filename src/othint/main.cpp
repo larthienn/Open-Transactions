@@ -1239,7 +1239,7 @@ void cInteractiveShell::run() {
 		std::string line;
 		cout << "\n\nCommand: Press ENTER to show auto-completion for the command. Type q or quit (and press ENTER) to quit." << endl;
 		cout << "commandline-part> " << std::flush;
-		getline(cin,line);
+		getline(cin,line,'\t');
 		if (line == "q") break;
 		if (line == "quit") break;
 		std::string cmdline;
