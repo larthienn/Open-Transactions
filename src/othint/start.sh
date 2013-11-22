@@ -1,3 +1,4 @@
 
-valgrind --leak-check=full --show-reachable=yes --suppressions=./readline.supp  -- ./othint --complete-shell
+#valgrind --leak-check=full --show-reachable=yes --suppressions=./readline.supp  -- 
+./othint --complete-shell
 

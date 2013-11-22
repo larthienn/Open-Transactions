@@ -855,11 +855,16 @@ class cHintData {
 		vector<nNewcli::cNyminfo> mNymsMy;
 		vector<string> mNymsMy_str; // TODO optimize/share memory? or convert on usage
 
-		bool mNymsMy_loaded;
+		vector<nNewcli::cNyminfo> mNymsHis;
+		vector<string> mNymsHis_str; // TODO optimize/share memory? or convert on usage
+
+		bool mNymsMy_loaded, mNymsHis_loaded;
 
 		cHintData();
 
 		const vector<string> getNymsMy();
+		const vector<string> getNymsHis();
+		bool isMemberOfBook ( const vector<string> );
 };
 
 cHintData::cHintData()
@@ -900,6 +905,32 @@ const vector<string> cHintData::getNymsMy() {
 	return mNymsMy_str;
 }
 
+const vector<string> cHintData::getNymsHis() {
+	if (!mNymsHis_loaded) {
+		try {
+			mNymsHis_loaded=0; // to mark that we start to delete data/data is inconsistent
+			mNymsHis.clear();
+			mNymsHis_str.clear();
+
+			ifstream plik("nymshis.txt");
+			long count=0;
+			while (plik.good() && (!plik.eof())) {
+				string name;
+				plik >> name;
+				nNewcli::cNyminfo nym(name);
+				mNymsHis.push_back( nym );
+				++count;
+			}
+		}
+		catch(...) { }
+		mNymsHis_loaded = true;
+	}
+	return mNymsHis_str;
+}
+
+bool isMemberOfBook ( const vector<string> MyNym){
+	bool is = 0;
+}
 
 
 
@@ -1077,12 +1108,12 @@ vector<string> cHintManager::BuildTreeOfCommandlines(const string &sofar_str, bo
 		}
 		if (full_words<3) {
 			if (action=="send") {
-				return WordsThatMatch(  current_word  ,  vector<string>{"<mynym>"} ); //TODO Suitable changes to this part - propably after merging with otlib
+				return WordsThatMatch(  current_word  ,  vector<string>{mHintData->getNymsMy()} ); //TODO Suitable changes to this part - propably after merging with otlib
 			}
 		}
 		if (full_words<4) { // we work on word3 - var1
 			if (cmdArgs.at(0)=="send") {
-				return WordsThatMatch(  current_word  ,  vector<string>{"<hisnym>"} ); //TODO Suitable changes to this part - propably after merging with otlib
+				return WordsThatMatch(  current_word  ,  vector<string>{mHintData->getNymsHis()} ); //TODO Suitable changes to this part - propably after merging with otlib
 			}
 		}
 	}
