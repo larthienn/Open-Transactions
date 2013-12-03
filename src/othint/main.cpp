@@ -928,8 +928,9 @@ const vector<string> cHintData::getNymsHis() {
 	return mNymsHis_str;
 }
 
-bool isMemberOfBook ( const vector<string> MyNym){
-	bool is = 0;
+bool isMemberOfBook ( const string &MyNym){
+	bool isMember = 0;
+	MyNym = "ala";
 }
 
 
